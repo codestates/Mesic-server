@@ -1,7 +1,7 @@
 /* stores controllers for the routers => 라우터에 들어가는 매서드들 */
 
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,11 +19,37 @@ export class UsersService {
     return await this.userModel.find().exec();
   }
 
-  // getAll(): User[] {
-  //   return this.users;
-  // }
+  async getOne(id: string): Promise<User> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found.`);
+    } else {
+      return user;
+    }
+  }
 
-  // getOne(id: string): User {
-  //   return this.users.find((users) => users.id === +id);
-  // }
+  async login(data) {
+    const { name, password } = data;
+    const user = await this.userModel.findOne({ name });
+
+    if (user.password === password && !!user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async logout() {}
+
+  async update(id: string, data): Promise<User> {
+    const user = await this.userModel.findByIdAndUpdate(id, data);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found.`);
+    } else {
+      return user;
+    }
+  }
+
+  //
+  private;
 }

@@ -6,28 +6,35 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersSevice: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-  @Get() //우선순위가 더 높다
-  async getuserinfo(): Promise<User[]> {
-    return await this.usersSevice.getAll();
+  // /GET :id => get userinfo
+  @Get() // don't need this method
+  async getAllUserInfo(): Promise<User[]> {
+    return await this.usersService.getAll();
   }
 
-  // @Get(':id')
-  // getoneUser(@Param('id') id: string) {
-  //   return `here is ${id} user info`;
-  // }
+  @Get(':id')
+  getOneUserInfo(@Param('id') user_id: string) {
+    const userinfo = this.usersService.getOne(user_id);
+    return userinfo;
+  }
 
+  // ┬  ┌─┐┌─┐┬┌┐┌
+  // │  │ ││ ┬││││
+  // ┴─┘└─┘└─┘┴┘└┘
   @Post('login')
   login(@Body() data) {
     /* 
     1. 몽고디비에 유저정보가 있는 확인 
     2. 있으면 ok => token을 던저줌 / 없으면 에러 
     */
-    const newUser = this.usersSevice.create({ ...data });
-    return newUser;
+
+    const checkLogin = this.usersService.login(data);
+    return checkLogin;
   }
 
+  // /POST logout
   @Post('/logout')
   logout(@Body() data) {
     /*
@@ -38,26 +45,19 @@ export class UsersController {
     return data;
   }
 
+  // ┌─┐┬─┐┌─┐┌─┐┌┬┐┌─┐  ┬ ┬┌─┐┌─┐┬─┐
+  // │  ├┬┘├┤ ├─┤ │ ├┤   │ │└─┐├┤ ├┬┘
+  // └─┘┴└─└─┘┴ ┴ ┴ └─┘  └─┘└─┘└─┘┴└─
   @Post('/signup')
   signup(@Body() data) {
-    return data;
+    const newUser = this.usersService.create({ ...data });
+    return newUser;
   }
 
+  // /PATCH :id => modify userinfo
   @Patch('/:id')
-  updateUser(@Param('id') userid: string, @Body() data) {
-    return {
-      userid: userid,
-      ...data,
-    };
+  updateUser(@Param('id') user_id: string, @Body() data) {
+    const updateUser = this.usersService.update(user_id, data);
+    return updateUser;
   }
 }
-
-/*
-
-/POST login
-/POST logout
-/POST signup
-/GET :id => get userinfo 
-/PATCH :id => modify userinfo
-
-*/
