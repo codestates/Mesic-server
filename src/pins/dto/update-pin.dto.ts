@@ -1,6 +1,6 @@
 import { IsString, IsNumber, IsOptional } from 'class-validator';
 
-export class CreatePinsDto {
+export class UpdatePinDto {
     @IsString()
     @IsOptional()
     readonly location: string;

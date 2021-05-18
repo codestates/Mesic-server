@@ -7,4 +7,10 @@ import { CreatePinDto } from './dto/create-pin.dto';
 @Injectable()
 export class PinsService{
     constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
+
+    // create
+    async create(createPinDto: CreatePinDto): Promise<Pin> {
+        const createPin = new this.pinModel(createPinDto);
+        return await createPin.save();
+    }
 }
