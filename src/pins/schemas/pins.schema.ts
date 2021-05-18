@@ -20,7 +20,7 @@ export class Pin {
   @Prop({ required: true })
   memo: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user_id: User;
 }
 
