@@ -5,12 +5,24 @@ import { Pin, PinDocument } from './schemas/pins.schema';
 import { CreatePinDto } from './dto/create-pin.dto';
 
 @Injectable()
-export class PinsService{
-    constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
+export class PinsService {
+  constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
 
-    // create
-    async create(createPinDto: CreatePinDto): Promise<Pin> {
-        const createPin = new this.pinModel(createPinDto);
-        return await createPin.save();
-    }
+  // get
+  async getPinInfo(id): Promise<Pin> {
+    const pinInfo = await this.pinModel.findById(id).exec();
+    return pinInfo;
+  }
+
+  // create
+  async create(createPinDto: CreatePinDto): Promise<Pin> {
+    const createPin = new this.pinModel(createPinDto);
+    return await createPin.save();
+  }
+
+  // delete
+  async delete(id) {
+    const deletePin = this.pinModel.deleteOne({ _id: id }).exec();
+    return deletePin;
+  }
 }
