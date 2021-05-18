@@ -14,7 +14,7 @@ export class MemosService {
     return await createPin.save();
   }
 
-  //get
+  // get
   async getMemo(id: string) {
     const pin = await this.pinModel.findById(id).exec();
     if (!pin) {
