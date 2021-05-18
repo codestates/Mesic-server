@@ -13,4 +13,6 @@ export class PinsController{
         const newPin = this.pinsService.create(data);
         return newPin;
     }
+
+    
 }
