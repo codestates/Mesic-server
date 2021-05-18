@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pin, PinDocument } from './schemas/pins.schema';
-import { CreatePinDto } from './dto/create-pins.dto';
+import { CreatePinDto } from './dto/create-pin.dto';
 
 @Injectable()
 export class PinsService{
