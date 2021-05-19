@@ -18,10 +18,10 @@ export class PhotosController {
   // create/read/update/delete pin
   // POST /pins
   //
-  @Post()
-  createPin(@Body() data) {
-    const newPin = this.pinsService.create(data);
-    return newPin;
+  @Patch(':id')
+  updatePhoto(@Param('id') pin_id: string, @Body() data) {
+    const updatePin = this.pinsService.update(pin_id, data);
+    return updatePin;
   }
 
   /*
