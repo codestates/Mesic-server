@@ -16,13 +16,13 @@ export class Pin {
   )
   location: Record<string, any>;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   music: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   photo: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   memo: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
