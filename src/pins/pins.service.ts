@@ -8,6 +8,10 @@ import { CreatePinDto } from './dto/create-pin.dto';
 export class PinsService {
   constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
 
+  async getAll(): Promise<Pin[]> {
+    return await this.pinModel.find().exec();
+  }
+
   // get
   async getPinInfo(id): Promise<Pin> {
     const pinInfo = await this.pinModel.findById(id).exec();
