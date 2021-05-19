@@ -7,20 +7,12 @@ import { CreatePinDto } from '../dto/create-pin.dto';
 @Injectable()
 export class MemosService {
   constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
-
-  // create
-  async create(createPinDto: CreatePinDto): Promise<Pin> {
-    const createPin = new this.pinModel(createPinDto);
-    return await createPin.save();
-  }
-
-  // get
-  async getMemo(id: string) {
-    const pin = await this.pinModel.findById(id).exec();
+  async update(id: string, data): Promise<Pin> {
+    const pin = await this.pinModel.findByIdAndUpdate(id, data);
     if (!pin) {
-      throw new NotFoundException();
+      throw new NotFoundException(`User with ID ${id} not found.`);
     } else {
-      return pin.memo;
+      return pin;
     }
   }
 }
