@@ -13,18 +13,12 @@ import { ModulesContainer } from '@nestjs/core';
 
 @Controller('memo') // pins/locations
 export class MemosController {
-  constructor(private readonly memosService: MemosService) {}
+  constructor(private readonly pinsService: MemosService) {}
 
-  @Get(':id')
-  getMemo(@Param('id') pin_id: string) {
-    return this.memosService.getMemo(pin_id);
-  }
 
-  @Patch()
-  updateMemo() {}
-
-  @Delete()
-  deleteMemo() {
-    // 메모에 있는 것을
+  @Patch('/:id')
+  updateMemo(@Param('id') pin_id: string, @Body() data) {
+    const updateMemo = this.pinsService.update(pin_id, data);
+    return updateMemo;
   }
 }
