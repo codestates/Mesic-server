@@ -8,7 +8,6 @@ import { CreatePinDto } from '../dto/create-pin.dto';
 export class locationsService {
   constructor(@InjectModel(Pin.name) private pinModel: Model<PinDocument>) {}
 
-  // create
   async update(id: string, data): Promise<Pin> {
     const pin = await this.pinModel.findByIdAndUpdate(id, data);
     if (!pin) {
