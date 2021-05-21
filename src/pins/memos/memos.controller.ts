@@ -15,7 +15,6 @@ import { ModulesContainer } from '@nestjs/core';
 export class MemosController {
   constructor(private readonly pinsService: MemosService) {}
 
-
   @Patch('/:id')
   updateMemo(@Param('id') pin_id: string, @Body() data) {
     const updateMemo = this.pinsService.update(pin_id, data);
