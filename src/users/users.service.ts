@@ -28,7 +28,7 @@ export class UsersService {
     if(isExisted){
       throw new ForbiddenException({
         statusCode : HttpStatus.FORBIDDEN,
-        message : [`this email is already existed`],
+        message : [`this email is already existed!`],
         error : "Forbidden"
       })
     }

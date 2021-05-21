@@ -16,7 +16,7 @@ import {
 import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
