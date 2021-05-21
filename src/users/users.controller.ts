@@ -1,10 +1,22 @@
 /* express에서 라우터역할 */
 
 import { AuthService } from 'src/auth/auth.service';
-import { Body, Controller, Get, Res, Param, Patch, Post, UseGuards, Request, Session} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Res,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+  Request,
+  Session,
+} from '@nestjs/common';
 import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
-
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -24,34 +36,6 @@ export class UsersController {
     const userinfo = this.usersService.getOne(user_id);
     return userinfo;
   }
-
-  // ┬  ┌─┐┌─┐┬┌┐┌
-  // │  │ ││ ┬││││
-  // ┴─┘└─┘└─┘┴┘└┘
-  // @Post('login')
-  // login(@Body() data) {
-  //   /* 
-  //   1. 몽고디비에 유저정보가 있는 확인 
-  //   2. 있으면 ok => token을 던저줌 / 없으면 에러 
-  //   */
-
-  //   const checkLogin = this.usersService.login(data);
-  //   return checkLogin;
-  // }
-
-  // @UseGuards(AuthGuard('jwt'))
-	// @Get()
-	// async getProfile(@Request() req) {
-	// 	return req.user;
-	// }
-
-  // @UseGuards(AuthGuard('local'))
-  // @Post('/login')
-  // async login(@Session() session, @Request() req, @Res({ passthrough: true}) response) {
-	// 	const access_token = await (await this.authService.login(req.user)).access_token;
-	// 	await response.cookie('Authorization', access_token);
-	// 	return req.user;
-	// }
 
   // /POST logout
   @Post('/logout')
@@ -74,6 +58,7 @@ export class UsersController {
   }
 
   // /PATCH :id => modify userinfo
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   updateUser(@Param('id') user_id: string, @Body() data) {
     const updateUser = this.usersService.update(user_id, data);

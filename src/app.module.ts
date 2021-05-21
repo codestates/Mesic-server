@@ -9,11 +9,9 @@ import { AppController } from './app.controller';
   imports: [
     UsersModule,
     PinsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://boseong:tavIZyzUPnWRfBJl@cluster0.snujj.mongodb.net/mesic?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     AuthModule,
   ],
-  controllers: [AppController]
+  controllers: [AppController],
 })
 export class AppModule {}

@@ -24,16 +24,16 @@ export class UsersService {
     return await createUser.save();
   }
 
-  //
-  async findOne(name: string): Promise<User[] | undefined> {
-    return await this.userModel.find((user) => user.name === name);
-  }
+  // //
+  // async findOne(name: string): Promise<User[] | undefined> {
+  //   return await this.userModel.find((user) => user.name === name);
+  // }
 
-  async findUser(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
-    return user;
-  }
-  //
+  // async findUser(id: string): Promise<User> {
+  //   const user = await this.userModel.findById(id).exec();
+  //   return user;
+  // }
+  // //
 
   async getAll(): Promise<User[]> {
     return await this.userModel.find().exec();

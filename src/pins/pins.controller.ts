@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Pin } from './schemas/pins.schema';
 import { PinsService } from './pins.service';
 import { ModulesContainer } from '@nestjs/core';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('pins') // pins/locations
 export class PinsController {
@@ -26,12 +28,14 @@ export class PinsController {
     return this.pinsService.getPinInfo(pins_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   createPin(@Body() data) {
     const newPin = this.pinsService.create(data);
     return newPin;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deletePin(@Param('id') pins_id: string) {
     const result = await this.pinsService.delete(pins_id);
