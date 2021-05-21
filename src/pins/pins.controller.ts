@@ -11,7 +11,7 @@ import {
 import { Pin } from './schemas/pins.schema';
 import { PinsService } from './pins.service';
 import { ModulesContainer } from '@nestjs/core';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('pins') // pins/locations
 export class PinsController {

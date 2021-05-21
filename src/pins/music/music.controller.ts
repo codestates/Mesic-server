@@ -11,7 +11,7 @@ import {
 import { Pin } from '../schemas/pins.schema';
 import { MusicService } from './music.service';
 import { ModulesContainer } from '@nestjs/core';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('music') // pins/locations
 export class MusicController {
