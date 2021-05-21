@@ -21,9 +21,4 @@ export class LocationsController {
     const updateLocation = this.pinsService.update(pin_id, data);
     return updateLocation;
   }
-  /*
-    기능 적으로 수정해야하는 부분ㅇ
-    pin 3가지가 꼭다 들어가야하는건 아니다. 
-    Post /pins => 정보가 들어가는데 
-     */
 }

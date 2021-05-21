@@ -1,29 +1,18 @@
 /* express에서 라우터역할 */
 
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Request,
-  UseGuards,
-  Session,
-  Res,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
+import { Body, Controller, Get, Res, Param, Patch, Post, UseGuards, Request, Session} from '@nestjs/common';
 import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
+
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
+
     private readonly authService: AuthService,
   ) {}
-
   // /GET :id => get userinfo
   @Get() // don't need this method
   async getAllUserInfo(): Promise<User[]> {
@@ -39,26 +28,30 @@ export class UsersController {
   // ┬  ┌─┐┌─┐┬┌┐┌
   // │  │ ││ ┬││││
   // ┴─┘└─┘└─┘┴┘└┘
+  // @Post('login')
+  // login(@Body() data) {
+  //   /* 
+  //   1. 몽고디비에 유저정보가 있는 확인 
+  //   2. 있으면 ok => token을 던저줌 / 없으면 에러 
+  //   */
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get()
-  async getProfile(@Request() req) {
-    return req.user;
-  }
+  //   const checkLogin = this.usersService.login(data);
+  //   return checkLogin;
+  // }
 
-  @UseGuards(AuthGuard('local'))
-  @Post('login')
-  async login(
-    @Session() session,
-    @Request() req,
-    @Res({ passthrough: true }) response,
-  ) {
-    const access_token = await (
-      await this.authService.login(req.user)
-    ).access_token;
-    await response.cookie('Authorization', access_token);
-    return req.user;
-  }
+  // @UseGuards(AuthGuard('jwt'))
+	// @Get()
+	// async getProfile(@Request() req) {
+	// 	return req.user;
+	// }
+
+  // @UseGuards(AuthGuard('local'))
+  // @Post('/login')
+  // async login(@Session() session, @Request() req, @Res({ passthrough: true}) response) {
+	// 	const access_token = await (await this.authService.login(req.user)).access_token;
+	// 	await response.cookie('Authorization', access_token);
+	// 	return req.user;
+	// }
 
   // /POST logout
   @Post('/logout')

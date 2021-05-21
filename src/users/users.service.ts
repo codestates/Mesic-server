@@ -48,9 +48,14 @@ export class UsersService {
     }
   }
 
+  async findOne(name: string): Promise<User> {
+    const user = await this.userModel.findOne({name}).exec();
+    return user;
+  }
+
   async login(data) {
-    const { name, password } = data;
-    const user = await this.userModel.findOne({ name });
+    const { username, password } = data;
+    const user = await this.userModel.findOne({ username });
 
     if (user.password === password && !!user) {
       return true;
