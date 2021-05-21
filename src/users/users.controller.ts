@@ -1,18 +1,18 @@
 /* express에서 라우터역할 */
 
+import { AuthService } from 'src/auth/auth.service';
 import { Body, Controller, Get, Res, Param, Patch, Post, UseGuards, Request, Session} from '@nestjs/common';
 import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
-import { AuthService } from 'src/auth/auth.service';
-// import { AuthGuard } from '@nestjs/passport';
+
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly authService : AuthService
-    ) {}
 
+    private readonly authService: AuthService,
+  ) {}
   // /GET :id => get userinfo
   @Get() // don't need this method
   async getAllUserInfo(): Promise<User[]> {
