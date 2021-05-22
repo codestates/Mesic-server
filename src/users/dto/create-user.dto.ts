@@ -1,9 +1,8 @@
 /* validation check */
 
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsArray, IsNumber, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
-
   @IsNotEmpty()
   @IsString()
   readonly profile: string;
@@ -22,4 +21,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   readonly nickname: string;
+
+  @IsArray()
+  readonly follow: string[];
+
+  @IsString()
+  refreshToken: string;
 }

@@ -1,7 +1,6 @@
 /* controller & service를 연결 해준다 */
 
-
-import { Module, forwardRef} from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
@@ -11,9 +10,7 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   imports: [
     forwardRef(() => AuthModule),
-    AuthModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    forwardRef(() => AuthModule)
   ],
   exports: [UsersService],
   controllers: [UsersController],

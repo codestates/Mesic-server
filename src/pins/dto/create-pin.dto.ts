@@ -1,7 +1,7 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsObject } from 'class-validator';
 
 export class CreatePinDto {
-  @IsString()
+  @IsObject()
   readonly location: string;
 
   @IsString()
