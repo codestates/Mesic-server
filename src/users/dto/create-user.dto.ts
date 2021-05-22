@@ -1,6 +1,6 @@
 /* validation check */
 
-import { IsString, IsArray, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsArray, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()

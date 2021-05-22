@@ -40,9 +40,7 @@ export class AuthService {
     // accesstoken이 만료되고, refreshtoken은 만료되지 않은 상황 -> accesstoken 갱신
   }
 
-  // Private Method
-
-  saveRefreshToken(id, refreshToken: String): void {
+  private saveRefreshToken(id, refreshToken: String): void {
     const newRefreshToken = { refreshToken };
     this.userService.saveToken(id, newRefreshToken);
   }

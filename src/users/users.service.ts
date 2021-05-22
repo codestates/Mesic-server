@@ -82,7 +82,12 @@ export class UsersService {
     }
   }
 
-  async logout() {}
+  async logout(userId: string) {
+    await this.userModel.findByIdAndUpdate(
+      { _id: userId },
+      { refreshToken: '' },
+    );
+  }
 
   async update(id: string, data): Promise<User> {
     const user = await this.userModel.findByIdAndUpdate(id, data);
