@@ -3,9 +3,7 @@
 import { Model } from 'mongoose';
 import {
   Injectable,
-  Inject,
   NotFoundException,
-  forwardRef,
   HttpStatus,
   ForbiddenException,
 } from '@nestjs/common';
@@ -41,17 +39,6 @@ export class UsersService {
     const createUser = new this.userModel(createUserDto);
     return await createUser.save();
   }
-
-  // //
-  // async findOne(name: string): Promise<User[] | undefined> {
-  //   return await this.userModel.find((user) => user.name === name);
-  // }
-
-  // async findUser(id: string): Promise<User> {
-  //   const user = await this.userModel.findById(id).exec();
-  //   return user;
-  // }
-  // //
 
   async getAll(): Promise<User[]> {
     return await this.userModel.find().exec();
