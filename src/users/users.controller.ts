@@ -5,7 +5,7 @@ import {
   Body,
   Controller,
   Get,
-  Res,
+  Delete,
   Param,
   Patch,
   Post,
@@ -53,5 +53,17 @@ export class UsersController {
   updateUser(@Param('id') user_id: string, @Body() data) {
     const updateUser = this.usersService.update(user_id, data);
     return updateUser;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('follow/:id')
+  addFollow(@Param('id') user_id: string, @Body() data) {
+    return this.usersService.addToFollow(user_id, data);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('follow/:id')
+  deleteFollow(@Param('id') user_id: string, @Body() data) {
+    return this.usersService.deleteFromFollow(user_id, data);
   }
 }

@@ -78,4 +78,25 @@ export class UsersService {
     await this.userModel.findByIdAndUpdate(id, refreshToken);
     return;
   }
+
+  async addToFollow(id: string, data) {
+    const user = await this.userModel.findById(id).exec();
+
+    if (!user.follow.includes(data.id)) {
+      user.follow.push(data.id);
+      return await user.save();
+    } else {
+      throw new ForbiddenException({
+        statusCode: HttpStatus.FORBIDDEN,
+        message: [`this follow is already existed!`],
+        error: 'Forbidden',
+      });
+    }
+  }
+
+  async deleteFromFollow(id: string, data) {
+    return await this.userModel
+      .findByIdAndUpdate({ _id: id }, { $pullAll: { follow: [data.id] } })
+      .exec();
+  }
 }
