@@ -17,6 +17,7 @@ import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -42,7 +43,7 @@ export class UsersController {
   }
 
   @Post('/signup')
-  signup(@Body() data) {
+  signup(@Body() data: CreateUserDto) {
     const newUser = this.usersService.create({ ...data });
     return newUser;
   }

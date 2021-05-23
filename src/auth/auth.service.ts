@@ -10,8 +10,8 @@ export class AuthService {
     private jwtService: JwtService, // private userModel: Model<UserDocument>,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findOne(username);
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userService.findOne(email);
     if (!user || (user && !compare(password, user.password))) {
       // if (user && user.password === password) {
       return null;
@@ -25,12 +25,9 @@ export class AuthService {
     2. save refreshToken in Database
     3. send access token & refreshToken
     */
-    const { id, username, userId } = user;
+    const { id, name } = user;
     const refreshToken = this.jwtService.sign({}, { expiresIn: '14d' });
-    const accessToken = this.jwtService.sign(
-      { username, userId },
-      { expiresIn: '1m' },
-    );
+    const accessToken = this.jwtService.sign({ id, name }, { expiresIn: '1m' });
     this.saveRefreshToken(id, refreshToken);
     return { id, accessToken, refreshToken };
   }
