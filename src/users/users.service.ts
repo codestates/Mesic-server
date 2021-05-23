@@ -3,9 +3,7 @@
 import { Model } from 'mongoose';
 import {
   Injectable,
-  Inject,
   NotFoundException,
-  forwardRef,
   HttpStatus,
   ForbiddenException,
 } from '@nestjs/common';
@@ -41,17 +39,6 @@ export class UsersService {
     const createUser = new this.userModel(createUserDto);
     return await createUser.save();
   }
-
-  // //
-  // async findOne(name: string): Promise<User[] | undefined> {
-  //   return await this.userModel.find((user) => user.name === name);
-  // }
-
-  // async findUser(id: string): Promise<User> {
-  //   const user = await this.userModel.findById(id).exec();
-  //   return user;
-  // }
-  // //
 
   async getAll(): Promise<User[]> {
     return await this.userModel.find().exec();
@@ -90,5 +77,26 @@ export class UsersService {
   async saveToken(id: string, refreshToken) {
     await this.userModel.findByIdAndUpdate(id, refreshToken);
     return;
+  }
+
+  async addToFollow(id: string, data) {
+    const user = await this.userModel.findById(id).exec();
+
+    if (!user.follow.includes(data.id)) {
+      user.follow.push(data.id);
+      return await user.save();
+    } else {
+      throw new ForbiddenException({
+        statusCode: HttpStatus.FORBIDDEN,
+        message: [`this follow is already existed!`],
+        error: 'Forbidden',
+      });
+    }
+  }
+
+  async deleteFromFollow(id: string, data) {
+    return await this.userModel
+      .findByIdAndUpdate({ _id: id }, { $pullAll: { follow: [data.id] } })
+      .exec();
   }
 }

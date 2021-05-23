@@ -13,23 +13,17 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findOne(email);
     if (!user || (user && !compare(password, user.password))) {
-      // if (user && user.password === password) {
       return null;
     }
     return user;
   }
 
   async login(user: any) {
-    /* 
-    1. create accessToken & refreshToken 
-    2. save refreshToken in Database
-    3. send access token & refreshToken
-    */
     const { id, name } = user;
     const refreshToken = this.jwtService.sign({}, { expiresIn: '14d' });
-    const accessToken = this.jwtService.sign({ id, name }, { expiresIn: '1m' });
+    const accessToken = this.jwtService.sign({ id, name }, { expiresIn: '2h' });
     this.saveRefreshToken(id, refreshToken);
-    return { id, accessToken, refreshToken };
+    return { accessToken };
   }
 
   // 유저가 현재 가진 accessToken의 validation을 파악하는 함수
