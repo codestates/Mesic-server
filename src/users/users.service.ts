@@ -14,7 +14,7 @@ import { User, UserDocument } from './schemas/users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { AuthService } from 'src/auth/auth.service';
 import * as bcrypt from 'bcrypt';
-import { bcryptConstant } from './constants'
+import { bcryptConstant } from './constants';
 
 @Injectable()
 export class UsersService {
@@ -24,15 +24,20 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const isExisted = await this.userModel.findOne({email: createUserDto.email});
-    if(isExisted){
+    const isExisted = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+    if (isExisted) {
       throw new ForbiddenException({
-        statusCode : HttpStatus.FORBIDDEN,
-        message : [`this email is already existed!`],
-        error : "Forbidden"
-      })
+        statusCode: HttpStatus.FORBIDDEN,
+        message: [`this email is already existed!`],
+        error: 'Forbidden',
+      });
     }
-    createUserDto.password = await bcrypt.hash(createUserDto.password, bcryptConstant.saltOrRounds);
+    createUserDto.password = await bcrypt.hash(
+      createUserDto.password,
+      bcryptConstant.saltOrRounds,
+    );
     const createUser = new this.userModel(createUserDto);
     return await createUser.save();
   }
@@ -61,23 +66,17 @@ export class UsersService {
     }
   }
 
-  async findOne(name: string): Promise<User> {
-    const user = await this.userModel.findOne({name}).exec();
+  async findOne(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email }).exec();
     return user;
   }
 
-  async login(data) {
-    const { username, password } = data;
-    const user = await this.userModel.findOne({ username });
-
-    if (user.password === password && !!user) {
-      return true;
-    } else {
-      return false;
-    }
+  async logout(userId: string) {
+    await this.userModel.findByIdAndUpdate(
+      { _id: userId },
+      { refreshToken: '' },
+    );
   }
-
-  async logout() {}
 
   async update(id: string, data): Promise<User> {
     const user = await this.userModel.findByIdAndUpdate(id, data);
@@ -88,6 +87,8 @@ export class UsersService {
     }
   }
 
-  //
-  private;
+  async saveToken(id: string, refreshToken) {
+    await this.userModel.findByIdAndUpdate(id, refreshToken);
+    return;
+  }
 }
