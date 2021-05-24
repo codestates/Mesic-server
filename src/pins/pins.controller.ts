@@ -1,8 +1,10 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -32,7 +34,10 @@ export class PinsController {
   @Post()
   createPin(@Body() data) {
     const newPin = this.pinsService.create(data);
-    return newPin;
+    if (!newPin) {
+      throw new ConflictException();
+    }
+    return { message: 'success' };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -40,9 +45,9 @@ export class PinsController {
   async deletePin(@Param('id') pins_id: string) {
     const result = await this.pinsService.delete(pins_id);
     if (result.n === 1) {
-      return { message: 'Thumbs up!' };
+      return { message: 'success' };
     } else {
-      return { message: 'Fucked up!' };
+      throw new NotFoundException();
     }
   }
 
