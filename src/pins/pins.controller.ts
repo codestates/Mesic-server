@@ -7,6 +7,7 @@ import {
   NotFoundException,
   Param,
   Patch,
+  Query,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -19,15 +20,19 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 export class PinsController {
   constructor(private readonly pinsService: PinsService) {}
 
-  // pin create and delete
   @Get()
   async getAll(): Promise<Pin[]> {
     return await this.pinsService.getAll();
   }
 
-  @Get(':id')
-  getPin(@Param('id') pins_id: string) {
-    return this.pinsService.getPinInfo(pins_id);
+  @Get('pins/:id')
+  getPin(@Param('id') id: string) {
+    return this.pinsService.getPinInfo(id);
+  }
+
+  @Get('users/:id')
+  getPinByUser(@Param('id') id: string) {
+    return this.pinsService.getPinInfoByUser(id);
   }
 
   @UseGuards(JwtAuthGuard)

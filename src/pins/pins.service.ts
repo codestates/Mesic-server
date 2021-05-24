@@ -18,6 +18,10 @@ export class PinsService {
     return pinInfo;
   }
 
+  async getPinInfoByUser(id): Promise<Pin[]> {
+    const pinInfo = await this.pinModel.find({ user_id: id }).exec();
+    return pinInfo;
+  }
   // create
   async create(createPinDto: CreatePinDto): Promise<Pin> {
     const createPin = new this.pinModel(createPinDto);
