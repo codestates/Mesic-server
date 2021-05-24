@@ -1,6 +1,6 @@
 /* mongoDB의 스키마 작성 */
 
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose'; // import { Document } from 'mongoose'
 import { User } from '../../users/schemas/users.schema';
 
@@ -8,19 +8,30 @@ export type PinDocument = Pin & Document;
 
 @Schema()
 export class Pin {
-  @Prop({ required: true })
-  location: string;
+  @Prop(
+    raw({
+      latitude: { type: String },
+      longitude: { type: String },
+    }),
+  )
+  location: Record<string, any>;
 
-  @Prop({ required: true })
-  music: string;
+  @Prop(
+    raw({
+      video_Id: { type: String },
+      title: { type: String },
+      thumbnail: { type: String },
+    }),
+  )
+  music: Record<string, any>;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   photo: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   memo: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user_id: User;
 }
 

@@ -1,15 +1,18 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsObject } from 'class-validator';
 
 export class CreatePinDto {
-    @IsString()
-    readonly location: string;
+  @IsObject()
+  readonly location: string;
 
-    @IsString()
-    readonly music: string;
+  @IsObject()
+  @IsOptional()
+  readonly music: string;
 
-    @IsString()
-    readonly photo: string;
+  @IsString()
+  @IsOptional()
+  readonly photo: string;
 
-    @IsString()
-    readonly memo: string;
+  @IsString()
+  @IsOptional()
+  readonly memo: string;
 }
