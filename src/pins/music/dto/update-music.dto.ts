@@ -1,6 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsObject } from 'class-validator';
 
 export class UpdateMusicDto {
-  @IsString()
-  readonly music: string;
+  @IsObject()
+  readonly music: Record<string, any>;
 }

@@ -16,8 +16,14 @@ export class Pin {
   )
   location: Record<string, any>;
 
-  @Prop({ required: false })
-  music: string;
+  @Prop(
+    raw({
+      video_Id: { type: String },
+      title: { type: String },
+      thumbnail: { type: String },
+    }),
+  )
+  music: Record<string, any>;
 
   @Prop({ required: false })
   photo: string;
