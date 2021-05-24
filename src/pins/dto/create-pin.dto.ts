@@ -4,7 +4,7 @@ export class CreatePinDto {
   @IsObject()
   readonly location: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
   readonly music: string;
 

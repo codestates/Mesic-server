@@ -1,19 +1,19 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsObject } from 'class-validator';
 
 export class UpdatePinDto {
-    @IsString()
-    @IsOptional()
-    readonly location: string;
+  @IsObject()
+  @IsOptional()
+  readonly location: string;
 
-    @IsString()
-    @IsOptional()
-    readonly music: string;
+  @IsObject()
+  @IsOptional()
+  readonly music: string;
 
-    @IsString()
-    @IsOptional()
-    readonly photo: string;
+  @IsString()
+  @IsOptional()
+  readonly photo: string;
 
-    @IsString()
-    @IsOptional()
-    readonly memo: string;
+  @IsString()
+  @IsOptional()
+  readonly memo: string;
 }

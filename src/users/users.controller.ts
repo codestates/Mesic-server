@@ -37,7 +37,7 @@ export class UsersController {
     return userinfo;
   }
 
-  @Post('/logout')
+  @Post('/logout/:id')
   logout(@Param('id') userId: string) {
     return this.usersService.logout(userId);
   }

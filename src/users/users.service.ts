@@ -59,18 +59,22 @@ export class UsersService {
   }
 
   async logout(userId: string) {
-    await this.userModel.findByIdAndUpdate(
-      { _id: userId },
-      { refreshToken: '' },
-    );
+    const logoutUser = await this.userModel
+      .findByIdAndUpdate({ _id: userId }, { refreshToken: '' })
+      .exec();
+    if (!logoutUser) {
+      throw new NotFoundException(`User with ID ${userId} not found.`);
+    } else {
+      return { message: 'seucess' };
+    }
   }
 
-  async update(id: string, data): Promise<User> {
-    const user = await this.userModel.findByIdAndUpdate(id, data);
+  async update(id: string, data) {
+    const user = await this.userModel.findByIdAndUpdate(id, data).exec();
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found.`);
     } else {
-      return user;
+      return { message: 'seucess' };
     }
   }
 
