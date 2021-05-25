@@ -19,11 +19,11 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const { id, name } = user;
+    const { id, email, name } = user;
     const refreshToken = this.jwtService.sign({}, { expiresIn: '14d' });
     const accessToken = this.jwtService.sign({ id, name }, { expiresIn: '2h' });
     this.saveRefreshToken(id, refreshToken);
-    return { accessToken };
+    return { id, name, email, accessToken };
   }
 
   async googleLogin(user: any) {
@@ -34,9 +34,9 @@ export class AuthService {
       await this.userService.createGoogleUser({
         ...result,
       });
-      return { accessToken };
+      return { accessToken, ...result };
     } else {
-      return { accessToken };
+      return { accessToken, ...result };
     }
   }
 
