@@ -105,11 +105,7 @@ export class UsersService {
       user.follow.push(data.id);
       return await user.save();
     } else {
-      throw new ForbiddenException({
-        statusCode: HttpStatus.FORBIDDEN,
-        message: [`this follow is already existed!`],
-        error: 'Forbidden',
-      });
+      return null;
     }
   }
 
