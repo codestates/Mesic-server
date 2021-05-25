@@ -26,9 +26,18 @@ export class AuthService {
     return { accessToken };
   }
 
-  // 유저가 현재 가진 accessToken의 validation을 파악하는 함수
-  async validateAccessToken() {
-    // accesstoken이 만료되고, refreshtoken은 만료되지 않은 상황 -> accesstoken 갱신
+  async googleLogin(user: any) {
+    const { accessToken, ...result } = user;
+    const isUser = await this.userService.findOne(result.email);
+
+    if (!isUser) {
+      await this.userService.createGoogleUser({
+        ...result,
+      });
+      return { accessToken };
+    } else {
+      return { accessToken };
+    }
   }
 
   private saveRefreshToken(id, refreshToken: String): void {
