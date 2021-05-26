@@ -31,12 +31,13 @@ export class AuthService {
     const isUser = await this.userService.findOne(result.email);
 
     if (!isUser) {
-      await this.userService.createGoogleUser({
+      const googleUser = await this.userService.createGoogleUser({
         ...result,
       });
-      return { accessToken, ...result };
+
+      return { accessToken, ...googleUser };
     } else {
-      return { accessToken, ...result };
+      return { accessToken, ...isUser };
     }
   }
 
