@@ -57,13 +57,12 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('follow/:id')
-  addFollow(@Param('id') user_id: string, @Body() data) {
-    return this.usersService.addToFollow(user_id, data);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Delete('follow/:id')
-  deleteFollow(@Param('id') user_id: string, @Body() data) {
-    return this.usersService.deleteFromFollow(user_id, data);
+  async addFollow(@Param('id') user_id: string, @Body() data) {
+    const follow = await this.usersService.addToFollow(user_id, data);
+    if (!follow) {
+      this.usersService.deleteFromFollow(user_id, data);
+    } else {
+      return { message: 'success' };
+    }
   }
 }

@@ -40,6 +40,21 @@ export class UsersService {
     return await createUser.save();
   }
 
+  async createGoogleUser(userinfo: any): Promise<User> {
+    const isExisted = await this.userModel.findOne({
+      email: userinfo.email,
+    });
+    if (isExisted) {
+      throw new ForbiddenException({
+        statusCode: HttpStatus.FORBIDDEN,
+        message: [`this email is already existed!`],
+        error: 'Forbidden',
+      });
+    }
+    const createUser = new this.userModel(userinfo);
+    return createUser.save();
+  }
+
   async getAll(): Promise<User[]> {
     return await this.userModel.find().exec();
   }
@@ -69,7 +84,7 @@ export class UsersService {
     }
   }
 
-  async update(id: string, data) {
+  async update(id: string, data: any) {
     const user = await this.userModel.findByIdAndUpdate(id, data).exec();
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found.`);
@@ -78,23 +93,19 @@ export class UsersService {
     }
   }
 
-  async saveToken(id: string, refreshToken) {
+  async saveToken(id: string, refreshToken: any) {
     await this.userModel.findByIdAndUpdate(id, refreshToken);
     return;
   }
 
-  async addToFollow(id: string, data) {
+  async addToFollow(id: string, data: any) {
     const user = await this.userModel.findById(id).exec();
 
     if (!user.follow.includes(data.id)) {
       user.follow.push(data.id);
       return await user.save();
     } else {
-      throw new ForbiddenException({
-        statusCode: HttpStatus.FORBIDDEN,
-        message: [`this follow is already existed!`],
-        error: 'Forbidden',
-      });
+      return null;
     }
   }
 
