@@ -3,8 +3,7 @@ import 'dotenv/config';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
-const port = 4000;
+// import * as fs from 'fs';
 
 // const httpsOptions = {
 //   key: fs.readFileSync('./secrets/private-key.pem'),
@@ -12,13 +11,17 @@ const port = 4000;
 // };
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(
+    AppModule,
+    // { httpsOptions },
+    { cors: true },
+  );
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
   );
-  await app.listen(port);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
