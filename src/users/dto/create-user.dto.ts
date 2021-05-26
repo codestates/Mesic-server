@@ -3,7 +3,6 @@
 import { IsString, IsArray, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty()
   @IsString()
   readonly profile: string;
 
