@@ -6,17 +6,15 @@ import {
   Get,
   NotFoundException,
   Param,
-  Patch,
-  Query,
   Post,
   UseGuards,
 } from '@nestjs/common';
 import { Pin } from './schemas/pins.schema';
 import { PinsService } from './pins.service';
-import { ModulesContainer } from '@nestjs/core';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreatePinDto } from './dto/create-pin.dto';
 
-@Controller('pins') // pins/locations
+@Controller('pins')
 export class PinsController {
   constructor(private readonly pinsService: PinsService) {}
 
@@ -37,7 +35,7 @@ export class PinsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  createPin(@Body() data) {
+  createPin(@Body() data: CreatePinDto) {
     const newPin = this.pinsService.create(data);
     if (!newPin) {
       throw new ConflictException();
@@ -55,14 +53,4 @@ export class PinsController {
       throw new NotFoundException();
     }
   }
-
-  /*
-  data = pins = {
-    location: {},
-    music: string,
-    memo: string,
-    photos: string,
-    user_id: string
-  }
-   */
 }
