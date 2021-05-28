@@ -10,6 +10,7 @@ import {
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/guard/local-auth.guard';
 import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';
+import { CreateGoogleUserDto } from './users/dto/create-google-user.dto';
 
 @Controller()
 export class AppController {
@@ -22,7 +23,7 @@ export class AppController {
   }
 
   @Post('google/login')
-  async googleLogin(@Body() userinfo) {
+  async googleLogin(@Body() userinfo: CreateGoogleUserDto) {
     if (!userinfo) {
       throw new NotFoundException();
     }

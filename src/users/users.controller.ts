@@ -18,6 +18,8 @@ import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { FollowDto } from './dto/follow.dto';
 
 @Controller('users')
 export class UsersController {
@@ -50,14 +52,14 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('/:id')
-  updateUser(@Param('id') user_id: string, @Body() data) {
+  updateUser(@Param('id') user_id: string, @Body() data: UpdateUserDto) {
     const updateUser = this.usersService.update(user_id, data);
     return updateUser;
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('follow/:id')
-  async addFollow(@Param('id') user_id: string, @Body() data) {
+  async addFollow(@Param('id') user_id: string, @Body() data: FollowDto) {
     const follow = await this.usersService.addToFollow(user_id, data);
     if (!follow) {
       this.usersService.deleteFromFollow(user_id, data);
