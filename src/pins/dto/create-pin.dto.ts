@@ -5,6 +5,9 @@ export class CreatePinDto {
   readonly location: string;
 
   @IsObject()
+  readonly user_id: string;
+
+  @IsObject()
   @IsOptional()
   readonly music: string;
 
