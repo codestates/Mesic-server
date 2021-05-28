@@ -8,10 +8,9 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { Pin } from '../schemas/pins.schema';
 import { PhotosService } from './photos.service';
-import { ModulesContainer } from '@nestjs/core';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { UpdatePhotoDto } from './dto/update-photo.dto';
 
 @Controller('photos') // pins/locations
 export class PhotosController {
@@ -19,7 +18,7 @@ export class PhotosController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  updatePhoto(@Param('id') pin_id: string, @Body() data) {
+  updatePhoto(@Param('id') pin_id: string, @Body() data: UpdatePhotoDto) {
     const updatePin = this.pinsService.update(pin_id, data);
     return updatePin;
   }
