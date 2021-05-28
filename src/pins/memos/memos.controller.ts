@@ -13,7 +13,7 @@ import { MemosService } from './memos.service';
 import { ModulesContainer } from '@nestjs/core';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
-@Controller('memo') // pins/locations
+@Controller('memos') // pins/locations
 export class MemosController {
   constructor(private readonly pinsService: MemosService) {}
 
