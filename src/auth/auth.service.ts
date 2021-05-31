@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private userService: UsersService,
     private httpService: HttpService,
-    private jwtService: JwtService, // private userModel: Model<UserDocument>,
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -59,8 +59,6 @@ export class AuthService {
           },
         )
         .toPromise();
-      console.log({ accessTokenFromGoogle });
-      console.log({ token: accessTokenFromGoogle.data.access_token });
       const dataFromToken = await this.httpService
         .get(GET_DATA_URI, {
           headers: {
@@ -68,28 +66,40 @@ export class AuthService {
           },
         })
         .toPromise();
-
-      const { email, name, picture } = dataFromToken.data;
-      const userData = await this.userService.findOne(email);
+      const { id, name, picture } = dataFromToken.data;
+      //google id로 user유무 찾기
+      const userData = await this.userService.findGoogleUser(id);
 
       if (!userData) {
-        const userData = await this.userService.createGoogleUser({
-          email,
+        const userInfo = await this.userService.createGoogleUser({
+          googleId: id,
           name,
-          picture,
+          profile: picture,
         });
-        const accessToken = this.jwtService.sign({ name }, { expiresIn: '2h' });
-        return { accessToken, userData };
+        const userId = await this.userService.getUserId(userInfo);
+        const accessToken = this.jwtService.sign(
+          { id: userId, name },
+          { expiresIn: '2h' },
+        );
+        const refreshToken = this.jwtService.sign({}, { expiresIn: '14d' });
+        this.saveRefreshToken(userId, refreshToken);
+        return { accessToken, ...userInfo };
       } else {
-        const accessToken = this.jwtService.sign({ name }, { expiresIn: '2h' });
-        return { accessToken, userData };
+        const userId = await this.userService.getUserId(userData);
+        const accessToken = this.jwtService.sign(
+          { id: userId, name },
+          { expiresIn: '2h' },
+        );
+        const refreshToken = this.jwtService.sign({}, { expiresIn: '14d' });
+        this.saveRefreshToken(userId, refreshToken);
+        return { accessToken, ...userData };
       }
     } catch {
       throw new BadGatewayException();
     }
   }
 
-  private saveRefreshToken(id, refreshToken: String): void {
+  private saveRefreshToken(id: string, refreshToken: String): void {
     const newRefreshToken = { refreshToken };
     this.userService.saveToken(id, newRefreshToken);
   }
