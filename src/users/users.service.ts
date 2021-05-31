@@ -1,6 +1,6 @@
 /* stores controllers for the routers => 라우터에 들어가는 매서드들 */
 
-import { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 import {
   Injectable,
   NotFoundException,
@@ -18,7 +18,7 @@ import { bcryptConstant } from './constants';
 export class UsersService {
   constructor(
     @InjectModel(User.name)
-    private userModel: Model<UserDocument>,
+    private userModel: mongoose.Model<UserDocument>,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -41,18 +41,10 @@ export class UsersService {
   }
 
   async createGoogleUser(userinfo: any): Promise<User> {
-    const isExisted = await this.userModel.findOne({
-      email: userinfo.email,
-    });
-    if (isExisted) {
-      throw new ForbiddenException({
-        statusCode: HttpStatus.FORBIDDEN,
-        message: [`this email is already existed!`],
-        error: 'Forbidden',
-      });
-    }
-    const createUser = new this.userModel(userinfo);
-    return createUser.save();
+    const { id, ...rest } = userinfo;
+    const createUser = new this.userModel({ ...rest });
+    await createUser.save();
+    return createUser;
   }
 
   async getAll(): Promise<User[]> {
@@ -60,10 +52,11 @@ export class UsersService {
   }
 
   async getOne(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found.`);
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) {
+      return null;
     } else {
+      const user = await this.userModel.findById(id).exec();
       return user;
     }
   }
@@ -113,5 +106,14 @@ export class UsersService {
     return await this.userModel
       .findByIdAndUpdate({ _id: id }, { $pullAll: { follow: [data.id] } })
       .exec();
+  }
+
+  async getUserId(userData: any) {
+    // 이거 왜 안돼지?
+    return userData._id;
+  }
+  async findGoogleUser(id: string): Promise<User> {
+    const googleUser = await this.userModel.findOne({ googleId: id });
+    return googleUser;
   }
 }
