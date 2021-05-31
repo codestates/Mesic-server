@@ -4,7 +4,7 @@ export class CreatePinDto {
   @IsObject()
   readonly location: string;
 
-  @IsObject()
+  @IsString()
   readonly user_id: string;
 
   @IsObject()

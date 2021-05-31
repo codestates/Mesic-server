@@ -13,12 +13,12 @@ export class PinsService {
   }
 
   // get
-  async getPinInfo(id): Promise<Pin> {
+  async getPinInfo(id: any): Promise<Pin> {
     const pinInfo = await this.pinModel.findById(id).exec();
     return pinInfo;
   }
 
-  async getPinInfoByUser(id): Promise<Pin[]> {
+  async getPinInfoByUser(id: any): Promise<Pin[]> {
     const pinInfo = await this.pinModel.find({ user_id: id }).exec();
     return pinInfo;
   }
@@ -29,7 +29,7 @@ export class PinsService {
   }
 
   // delete
-  async delete(id) {
+  async delete(id: any) {
     const deletePin = this.pinModel.deleteOne({ _id: id }).exec();
     return deletePin;
   }

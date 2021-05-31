@@ -23,11 +23,11 @@ export class AppController {
   }
 
   @Post('google/login')
-  async googleLogin(@Body() userinfo: CreateGoogleUserDto) {
-    if (!userinfo) {
+  async googleLogin(@Body() authorizationCode) {
+    if (!authorizationCode) {
       throw new NotFoundException();
     }
-    return await this.authService.googleLogin(userinfo);
+    return await this.authService.googleLogin(authorizationCode);
   }
 
   @UseGuards(JwtAuthGuard)
