@@ -10,7 +10,7 @@ export class User {
   @Prop({ required: false })
   profile: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   email: string;
 
   @Prop({ required: true })
@@ -21,6 +21,9 @@ export class User {
 
   @Prop({ required: false })
   nickname: string;
+
+  @Prop({ required: false })
+  googleId: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   follow: User[];

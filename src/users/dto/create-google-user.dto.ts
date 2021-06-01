@@ -6,9 +6,8 @@ export class CreateGoogleUserDto {
   @IsString()
   readonly profile: string;
 
-  @IsNotEmpty()
   @IsString()
-  readonly email: string;
+  readonly googleId: string;
 
   @IsNotEmpty()
   @IsString()
