@@ -1,73 +1,60 @@
+# Mesic 서비스 소개
+
+
+
+### 🪄🔮  Mesic [ Memory + Music ]  
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYyf7g%2Fbtq6v9QQthx%2FxuK3sot4SxIt5WklNifTd0%2Fimg.png" />
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+🎧 음악을 들으면 생각나는 추억이 있으신가요?   
+Mesic에서 추억을 기록하고 사람들과 공유해보세요!
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+     - 지도 기반의 게시물 업로드 서비스 입니다.  
+     - 음악/사진/메모를 추가하고 사람들과 공유할 수 있습니다.
+     
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+    
+## 서비스 이용 방법
 
-## Installation
+![](https://github.com/Gwan-Woo-Jeong/mesic_gifs/blob/main/mesic-steps.png?raw=true)
 
-```bash
-$ npm install
-```
 
-## Running the app
+## Flow Chart
+>### Client
+![](https://github.com/Gwan-Woo-Jeong/mesic_gifs/blob/main/mesic-flowchart.jpeg?raw=true)
+>### Server
+![](https://github.com/Gwan-Woo-Jeong/mesic_gifs/blob/main/server-flowchart.jpeg?raw=true)
 
-```bash
-# development
-$ npm run start
+## DB Schema
+![](https://github.com/Gwan-Woo-Jeong/mesic_gifs/blob/main/DBschema.jpeg?raw=true)
 
-# watch mode
-$ npm run start:dev
+## 사용 스텍 및 시스템 아키텍처
 
-# production mode
-$ npm run start:prod
-```
+![](https://cdn.discordapp.com/attachments/836032297622175820/850248630257319936/mesic-tech-stack.jpg)
+![](https://github.com/Gwan-Woo-Jeong/mesic_gifs/blob/main/mesic-architecture.png?raw=true)
 
-## Test
+>### Front-end
 
-```bash
-# unit tests
-$ npm run test
+- Typescript
+- React 
+- Redux
+- React-router-dom
+- Axios
+- Scss
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+>### Back-end
 
-## Support
+- NestJS
+- Node.js
+- MongoDB
+- Mongo DB Atlas
+- AWS
+- Mongoose
+- Bcrypt
+- JWT
+- Passport.js
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
